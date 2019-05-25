@@ -48,17 +48,32 @@ export class SmartTooltipDirective {
   ) {
   }
 
+  /**
+   * show tooltip.
+   *
+   * it public in order give from host component execute this method
+   * by using @ViewChild(SmartTooltipDirective)
+   */
   public showTooltip(): void {
-    this.createTooltip();
-    this.appRef.attachView(this.componentRef.hostView);
-    const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    this.setTooltipStyle(domElem);
-    document.body.appendChild(domElem);
+    if (!this.componentRef) {
+      this.createTooltip();
+      this.appRef.attachView(this.componentRef.hostView);
+      const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      this.setTooltipStyle(domElem);
+      document.body.appendChild(domElem);
+    }
   }
 
+  /**
+   * hide tooltip.
+   *
+   * it public in order give from host component execute this method
+   * by using @ViewChild(SmartTooltipDirective)
+   */
   public hideTooltip(): void {
     this.appRef.detachView(this.componentRef.hostView);
     this.componentRef.destroy();
+    this.componentRef = void 0;
   }
 
   private createTooltip(): void {
