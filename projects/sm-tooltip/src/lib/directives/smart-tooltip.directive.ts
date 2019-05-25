@@ -84,7 +84,26 @@ export class SmartTooltipDirective {
       .create(this.injector);
     this.componentRef.instance.text = this.getTextToDisplay();
     if (this.tooltipOptions.showArrow) {
-      this.componentRef.instance.arrowStrategy = ArrowStrategyOptions.BottomArrow;
+      let arrowStrategy;
+      switch (this.tooltipOptions.positionStrategy) {
+        case  PositionStrategyOptions.Top: {
+          arrowStrategy = ArrowStrategyOptions.BottomArrow;
+          break;
+        }
+        case  PositionStrategyOptions.Right: {
+          arrowStrategy = ArrowStrategyOptions.LeftArrow;
+          break;
+        }
+        case  PositionStrategyOptions.Bottom: {
+          arrowStrategy = ArrowStrategyOptions.TopArrow;
+          break;
+        }
+        case  PositionStrategyOptions.Left: {
+          arrowStrategy = ArrowStrategyOptions.RightArrow;
+          break;
+        }
+      }
+      this.componentRef.instance.arrowStrategy = arrowStrategy;
     }
   }
 
@@ -93,6 +112,7 @@ export class SmartTooltipDirective {
     let tooltipPosX;
     let tooltipPosY;
     let transform;
+    this.initOffset();
     switch (this.tooltipOptions.positionStrategy) {
       case  PositionStrategyOptions.Top: {
         tooltipPosX = x + (width / 2) + this.tooltipOptions.offset.left;
@@ -137,6 +157,49 @@ export class SmartTooltipDirective {
    */
   private getTextToDisplay(): string {
     return this.text || this.elementRef.nativeElement.innerText;
+  }
+
+  initOffset(): void {
+    const offset = 10;
+    switch (this.tooltipOptions.positionStrategy) {
+      case  PositionStrategyOptions.Top: {
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.top)) {
+          this.tooltipOptions.offset.top = -offset;
+        }
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.left)) {
+          this.tooltipOptions.offset.left = 0;
+        }
+        break;
+      }
+      case  PositionStrategyOptions.Right: {
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.left)) {
+          this.tooltipOptions.offset.left = offset;
+        }
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.top)) {
+          this.tooltipOptions.offset.top = 0;
+        }
+        break;
+      }
+      case  PositionStrategyOptions.Bottom: {
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.top)) {
+          this.tooltipOptions.offset.top = offset;
+        }
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.left)) {
+          this.tooltipOptions.offset.left = 0;
+        }
+        break;
+      }
+      case  PositionStrategyOptions.Left: {
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.left)) {
+          this.tooltipOptions.offset.left = -offset;
+        }
+        if (TooltipUtils.isNil(this.tooltipOptions.offset.top)) {
+          this.tooltipOptions.offset.top = 0;
+        }
+        break;
+      }
+    }
+
   }
 
 }

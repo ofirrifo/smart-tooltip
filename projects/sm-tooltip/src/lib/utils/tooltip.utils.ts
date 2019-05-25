@@ -40,5 +40,11 @@ export class TooltipUtils {
 
     return TooltipUtils.mergeDeep(target, ...sources);
   }
+
+  static isNil(value: any): boolean {
+    return value === void 0 || value === null;
+  }
+
+
 }
 

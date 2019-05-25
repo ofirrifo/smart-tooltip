@@ -6,8 +6,8 @@ export const TOOLTIP_OPTIONS: TooltipOptions = {
     zIndex: 1000
   },
   offset: {
-    left: 0,
-    top: 0
+    left: void 0,
+    top: void 0
   },
   positionStrategy: PositionStrategyOptions.Bottom,
   showArrow: true

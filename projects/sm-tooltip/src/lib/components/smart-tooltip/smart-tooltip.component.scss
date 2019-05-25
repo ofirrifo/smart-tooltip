@@ -1,5 +1,16 @@
-$background-color: rgba(97, 97, 97, .9);
+$background-color: var(--tooltip-bg-color, rgba(97, 97, 97, .9));
 $border-width: 5px;
+
+@mixin arrow {
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    @content;
+  }
+}
 
 :host {
   .container {
@@ -11,17 +22,39 @@ $border-width: 5px;
     height: 14px;
     padding: 8px 10px 8px 10px;
 
-    &.bottom-arrow {
-      &:after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
+    &.top-arrow {
+      @include arrow {
         border-width: 0 $border-width $border-width $border-width;
         border-color: transparent transparent $background-color transparent;
-        position: absolute;
         bottom: 100%;
         left: calc(50% - #{$border-width});
+      }
+    }
+
+    &.right-arrow {
+      @include arrow {
+        border-width: $border-width 0 $border-width $border-width;
+        border-color: transparent transparent transparent $background-color;
+        left: 100%;
+        top: calc(50% - #{$border-width});
+      }
+    }
+
+    &.bottom-arrow {
+      @include arrow {
+        border-width: $border-width $border-width 0 $border-width;
+        border-color: $background-color transparent transparent transparent;
+        top: 100%;
+        left: calc(50% - #{$border-width});
+      }
+    }
+
+    &.left-arrow {
+      @include arrow {
+        border-width: $border-width $border-width $border-width 0;
+        border-color: transparent $background-color transparent transparent;
+        right: 100%;
+        top: calc(50% - #{$border-width});
       }
     }
   }
