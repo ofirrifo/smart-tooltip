@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ArrowStrategyOptions } from '../../model/tooltip-options.interface';
 import { smTooltipAnimations } from '../../animations/smart-tooltip.animation';
 
@@ -13,19 +13,8 @@ export class SmartTooltipComponent implements OnInit {
   @Input() arrowStrategy: ArrowStrategyOptions;
 
 
-  animationVisibilityState = 'initial';
+  constructor() {}
 
-
-  constructor(private cdr: ChangeDetectorRef,
-  ) {
-  }
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.animationVisibilityState = 'visible';
-      // for case the host component is on push
-      this.cdr.markForCheck();
-    });
-  }
+  ngOnInit() {}
 
 }
