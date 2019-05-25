@@ -53,9 +53,11 @@ export class SmartTooltipDirective {
    *
    * it public in order give from host component execute this method
    * by using @ViewChild(SmartTooltipDirective)
+   *
+   * tooltip will display only if still not display and we have text to display
    */
   public showTooltip(): void {
-    if (!this.componentRef) {
+    if (!this.componentRef && this.getTextToDisplay()) {
       this.createTooltip();
       this.appRef.attachView(this.componentRef.hostView);
       const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
@@ -80,7 +82,7 @@ export class SmartTooltipDirective {
     this.componentRef = this.componentFactoryResolver
       .resolveComponentFactory(SmartTooltipComponent)
       .create(this.injector);
-    this.componentRef.instance.text = this.text;
+    this.componentRef.instance.text = this.getTextToDisplay();
   }
 
   private calcTooltipPos(): TooltipPosition {
@@ -123,6 +125,15 @@ export class SmartTooltipDirective {
     Object.keys(this.tooltipOptions.style).forEach((key: string) => {
       domElem.style[key] = this.tooltipOptions.style[key];
     });
+  }
+
+  /**
+   * get text to display in tooltip
+   * in case text is given from the host component we display the given text
+   * else we use the innerText if exist
+   */
+  private getTextToDisplay(): string {
+    return this.text || this.elementRef.nativeElement.innerText;
   }
 
 }
