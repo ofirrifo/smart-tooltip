@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { mergeDeep } from '../decorators/merge-deep.decorator';
-import { TooltipOptions } from '../model/tooltip-options.interface';
+import { PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
 import { TooltipUtils } from '../utils/tooltip.utils';
 import { TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
 import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
@@ -85,9 +85,37 @@ export class SmartTooltipDirective {
 
   private calcTooltipPos(): TooltipPosition {
     const {x, y, width, height} = this.elementRef.nativeElement.getBoundingClientRect();
-    const tooltipPosX = x + (width / 2) + this.tooltipOptions.offset.left;
-    const tooltipPosY = (y + height) + this.tooltipOptions.offset.top;
-    return {left: `${tooltipPosX}px`, top: `${tooltipPosY}px`};
+    let tooltipPosX;
+    let tooltipPosY;
+    let transform;
+    switch (this.tooltipOptions.positionStrategy) {
+      case  PositionStrategyOptions.Top: {
+        tooltipPosX = x + (width / 2) + this.tooltipOptions.offset.left;
+        tooltipPosY = y + this.tooltipOptions.offset.top;
+        transform = 'translate(-50%, -100%)';
+        break;
+      }
+      case  PositionStrategyOptions.Right: {
+        tooltipPosX = x + width + this.tooltipOptions.offset.left;
+        tooltipPosY = y + (height / 2) + this.tooltipOptions.offset.top;
+        transform = 'translateY(-50%)';
+        break;
+      }
+      case  PositionStrategyOptions.Bottom: {
+        tooltipPosX = x + (width / 2) + this.tooltipOptions.offset.left;
+        tooltipPosY = (y + height) + this.tooltipOptions.offset.top;
+        transform = 'translateX(-50%)';
+        break;
+      }
+      case  PositionStrategyOptions.Left: {
+        tooltipPosX = x + this.tooltipOptions.offset.left;
+        tooltipPosY = y + (height / 2) + this.tooltipOptions.offset.top;
+        transform = 'translate(-100%, -50%)';
+        break;
+      }
+    }
+
+    return {left: `${tooltipPosX}px`, top: `${tooltipPosY}px`, transform};
   }
 
   private setTooltipStyle(domElem: HTMLElement): void {
