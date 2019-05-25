@@ -33,17 +33,12 @@ export class SmartTooltipDirective {
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    this.createTooltip();
-    this.appRef.attachView(this.componentRef.hostView);
-    const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    this.setTooltipStyle(domElem);
-    document.body.appendChild(domElem);
+    this.showTooltip();
   }
 
   @HostListener('mouseleave')
   onMouseLeave() {
-    this.appRef.detachView(this.componentRef.hostView);
-    this.componentRef.destroy();
+    this.hideTooltip();
   }
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
@@ -53,21 +48,34 @@ export class SmartTooltipDirective {
   ) {
   }
 
-  createTooltip(): void {
+  public showTooltip(): void {
+    this.createTooltip();
+    this.appRef.attachView(this.componentRef.hostView);
+    const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    this.setTooltipStyle(domElem);
+    document.body.appendChild(domElem);
+  }
+
+  public hideTooltip(): void {
+    this.appRef.detachView(this.componentRef.hostView);
+    this.componentRef.destroy();
+  }
+
+  private createTooltip(): void {
     this.componentRef = this.componentFactoryResolver
       .resolveComponentFactory(SmartTooltipComponent)
       .create(this.injector);
     this.componentRef.instance.text = this.text;
   }
 
-  calcTooltipPos(): TooltipPosition {
+  private calcTooltipPos(): TooltipPosition {
     const {x, y, width, height} = this.elementRef.nativeElement.getBoundingClientRect();
     const tooltipPosX = x + (width / 2) + this.tooltipOptions.offset.left;
     const tooltipPosY = (y + height) + this.tooltipOptions.offset.top;
     return {left: `${tooltipPosX}px`, top: `${tooltipPosY}px`};
   }
 
-  setTooltipStyle(domElem: HTMLElement): void {
+  private setTooltipStyle(domElem: HTMLElement): void {
     this.tooltipOptions.style = {...this.calcTooltipPos(), ...this.tooltipOptions.style};
     Object.keys(this.tooltipOptions.style).forEach((key: string) => {
       domElem.style[key] = this.tooltipOptions.style[key];
