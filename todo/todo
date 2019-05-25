@@ -1,0 +1,13 @@
+@TODO
+- add prettier
+- change lib prefix
+- support arrow tooltip
+- support tooltip position (top, right, bottom, left)
+- support dynamic component given by user
+- support automatic change position if tooltip has not space in the window
+- support show and hide tooltip strategy
+- add animation
+
+@DONE
+
+
