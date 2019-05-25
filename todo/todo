@@ -7,6 +7,7 @@
 - support automatic change position if tooltip has not space in the window
 - support show and hide tooltip strategy
 - add animation
+- lib use import with @app
 
 @DONE
 
