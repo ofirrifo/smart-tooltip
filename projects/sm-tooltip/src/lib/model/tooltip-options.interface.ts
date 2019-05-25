@@ -10,8 +10,16 @@ export enum PositionStrategyOptions {
   Left = 'left',
 }
 
+export enum ArrowStrategyOptions {
+  TopArrow = 'top-arrow',
+  RightArrow = 'right-arrow',
+  BottomArrow = 'bottom-arrow',
+  LeftArrow = 'left-arrow',
+}
+
 export interface TooltipOptions {
   style: Record<string, any>;
   offset?: TooltipOffset;
-  positionStrategy?: PositionStrategyOptions;
+  positionStrategy?: PositionStrategyOptions; // by default bottom
+  showArrow?: boolean; // by default true
 }

@@ -9,5 +9,6 @@ export const TOOLTIP_OPTIONS: TooltipOptions = {
     left: 0,
     top: 0
   },
-  positionStrategy: PositionStrategyOptions.Bottom
+  positionStrategy: PositionStrategyOptions.Bottom,
+  showArrow: true
 };

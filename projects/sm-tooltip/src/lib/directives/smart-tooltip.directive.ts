@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { mergeDeep } from '../decorators/merge-deep.decorator';
-import { PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
+import { ArrowStrategyOptions, PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
 import { TooltipUtils } from '../utils/tooltip.utils';
 import { TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
 import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
@@ -83,6 +83,9 @@ export class SmartTooltipDirective {
       .resolveComponentFactory(SmartTooltipComponent)
       .create(this.injector);
     this.componentRef.instance.text = this.getTextToDisplay();
+    if (this.tooltipOptions.showArrow) {
+      this.componentRef.instance.arrowStrategy = ArrowStrategyOptions.BottomArrow;
+    }
   }
 
   private calcTooltipPos(): TooltipPosition {
