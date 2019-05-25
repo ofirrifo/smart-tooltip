@@ -8,19 +8,21 @@ import {
   Injector,
   Input
 } from '@angular/core';
-import { SmartTooltipComponent } from './smart-tooltip/smart-tooltip.component';
-import { TooltipPosition } from './model/tooltip-position.interface';
-import { TooltipOptions } from './model/tooltip-options.interface';
-import { TooltipUtils } from './utils/tooltip.utils';
-import { TOOLTIP_OPTIONS } from './consts/smart-tooltip.const';
-import { mergeDeep } from './decorators/merge-deep.decorator';
+
+import { mergeDeep } from '../decorators/merge-deep.decorator';
+import { TooltipOptions } from '../model/tooltip-options.interface';
+import { TooltipUtils } from '../utils/tooltip.utils';
+import { TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
+import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
+import { TooltipPosition } from '../model/tooltip-position.interface';
+
 
 @Directive({
-  selector: '[appSmartTooltip]'
+  selector: '[libSmartTooltip]'
 })
 export class SmartTooltipDirective {
 
-  @Input('appSmartTooltip') text: string;
+  @Input('libSmartTooltip') text: string;
 
   @Input()
   @mergeDeep()

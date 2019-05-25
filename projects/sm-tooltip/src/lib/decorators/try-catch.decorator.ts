@@ -1,6 +1,5 @@
 /**
  * try catch decorator
- * @param errors list of error message in order to log error
  */
 export function tryCatch() {
   return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {

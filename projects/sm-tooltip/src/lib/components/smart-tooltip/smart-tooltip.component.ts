@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-smart-tooltip',
+  selector: 'lib-smart-tooltip',
   templateUrl: './smart-tooltip.component.html',
   styleUrls: ['./smart-tooltip.component.scss']
 })
