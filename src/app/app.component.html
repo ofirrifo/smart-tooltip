@@ -1,13 +1,27 @@
+<!--Top Tooltip-->
 <div class="container">
-  <div class="a" [libSmartTooltip] [tooltipOptions]="{offset: {top: 0}}">
-    some text
+  <div class="a" [libSmartTooltip] [tooltipOptions]="{positionStrategy: 'top'}">
+    Top
   </div>
-
 </div>
 
+<!--Right Tooltip-->
 <div class="container">
-  <div class="a" [libSmartTooltip]="'ABC 123 long text'" [tooltipOptions]="{offset: {left: 0}}">
-    some text
+  <div class="a" [libSmartTooltip]="'ABC 123 long text'" [tooltipOptions]="{positionStrategy: 'right'}">
+    Right
   </div>
+</div>
 
+<!--Bottom Tooltip-->
+<div class="container">
+  <div class="a" [libSmartTooltip]="'ABC 123 long text'" [tooltipOptions]="{positionStrategy: 'bottom'}">
+    Bottom
+  </div>
+</div>
+
+<!--Left Tooltip-->
+<div class="container">
+  <div class="a" [libSmartTooltip]="'ABC 123 long text'" [tooltipOptions]="{positionStrategy: 'left'}">
+    Left
+  </div>
 </div>
