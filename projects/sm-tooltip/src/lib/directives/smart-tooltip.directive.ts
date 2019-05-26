@@ -29,8 +29,8 @@ export class SmartTooltipDirective {
   tooltipOptions: TooltipOptions = TooltipUtils.cloneDeep(TOOLTIP_OPTIONS);
 
   private componentRef: any;
-  private showTimeoutId: NodeJS.Timer;
-  private hideTimeoutId: NodeJS.Timer;
+  private showTimeoutId: any;
+  private hideTimeoutId: any;
 
 
   @HostListener('mouseenter')
@@ -59,6 +59,9 @@ export class SmartTooltipDirective {
    * tooltip will display only if still not display and we have text to display
    */
   public showTooltip(): void {
+    if (this.hideTimeoutId) {
+      clearTimeout(this.hideTimeoutId);
+    }
     if (!this.componentRef && this.getTextToDisplay()) {
       this.showTimeoutId = setTimeout(() => {
         this.createTooltip();
@@ -77,13 +80,15 @@ export class SmartTooltipDirective {
    * by using @ViewChild(SmartTooltipDirective)
    */
   public hideTooltip(): void {
+    if (this.showTimeoutId) {
+      clearTimeout(this.showTimeoutId);
+    }
+
     this.hideTimeoutId = setTimeout(() => {
       if (this.componentRef) {
         this.appRef.detachView(this.componentRef.hostView);
         this.componentRef.destroy();
         this.componentRef = void 0;
-      } else {
-        clearTimeout(this.showTimeoutId);
       }
 
     }, this.tooltipOptions.delay.hide);
