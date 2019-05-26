@@ -1,4 +1,5 @@
 $background-color: var(--tooltip-bg-color, rgba(97, 97, 97, .9));
+$text-color: var(--tooltip-text-color, white);
 $border-width: 5px;
 
 @mixin arrow {
@@ -16,7 +17,7 @@ $border-width: 5px;
   .container {
     display: inline-block;
     background-color: $background-color;
-    color: white;
+    color: $text-color;
     font-size: 13px;
     border-radius: 3px;
     padding: 8px 10px 8px 10px;
