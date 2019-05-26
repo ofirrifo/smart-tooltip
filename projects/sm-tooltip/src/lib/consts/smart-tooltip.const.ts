@@ -1,4 +1,5 @@
 import { PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
+import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
 
 export const TOOLTIP_OPTIONS: TooltipOptions = {
   style: {
@@ -14,5 +15,6 @@ export const TOOLTIP_OPTIONS: TooltipOptions = {
   delay: {
     show: 700,
     hide: 300
-  }
+  },
+  customTooltipComp: SmartTooltipComponent
 };

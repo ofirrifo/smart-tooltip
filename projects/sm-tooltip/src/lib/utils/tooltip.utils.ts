@@ -2,8 +2,12 @@ import { tryCatch } from '../decorators/try-catch.decorator';
 
 export class TooltipUtils {
   @tryCatch()
-  static cloneDeep(value: any): any {
-    return JSON.parse(JSON.stringify(value));
+  static cloneDeep(value: any, exceptionKey?: string): any {
+    const clone = JSON.parse(JSON.stringify(value));
+    if (exceptionKey && exceptionKey in value) {
+      clone[exceptionKey] = value[exceptionKey];
+    }
+    return clone;
   }
 
 

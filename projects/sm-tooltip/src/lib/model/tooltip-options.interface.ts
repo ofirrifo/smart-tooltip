@@ -23,9 +23,10 @@ export interface TooltipDelay {
 }
 
 export interface TooltipOptions {
-  style: Record<string, any>;
+  style?: Record<string, any>;
   offset?: TooltipOffset;
   positionStrategy?: PositionStrategyOptions; // by default bottom
   showArrow?: boolean; // by default true
   delay?: TooltipDelay;
+  customTooltipComp?: any;
 }

@@ -13,7 +13,6 @@ import { mergeDeep } from '../decorators/merge-deep.decorator';
 import { ArrowStrategyOptions, PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
 import { TooltipUtils } from '../utils/tooltip.utils';
 import { TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
-import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
 import { TooltipPosition } from '../model/tooltip-position.interface';
 
 
@@ -26,7 +25,7 @@ export class SmartTooltipDirective {
 
   @Input()
   @mergeDeep()
-  tooltipOptions: TooltipOptions = TooltipUtils.cloneDeep(TOOLTIP_OPTIONS);
+  tooltipOptions: TooltipOptions = TooltipUtils.cloneDeep(TOOLTIP_OPTIONS, 'customTooltipComp');
 
   private componentRef: any;
   private showTimeoutId: any;
@@ -96,7 +95,7 @@ export class SmartTooltipDirective {
 
   private createTooltip(): void {
     this.componentRef = this.componentFactoryResolver
-      .resolveComponentFactory(SmartTooltipComponent)
+      .resolveComponentFactory(this.tooltipOptions.customTooltipComp)
       .create(this.injector);
     this.componentRef.instance.text = this.getTextToDisplay();
     if (this.tooltipOptions.showArrow) {
