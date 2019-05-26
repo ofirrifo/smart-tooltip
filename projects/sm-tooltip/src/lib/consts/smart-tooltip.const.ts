@@ -12,7 +12,7 @@ export const TOOLTIP_OPTIONS: TooltipOptions = {
   positionStrategy: PositionStrategyOptions.Bottom,
   showArrow: true,
   delay: {
-    show: 1000,
-    hide: 2000
+    show: 700,
+    hide: 300
   }
 };
