@@ -17,9 +17,15 @@ export enum ArrowStrategyOptions {
   LeftArrow = 'left-arrow',
 }
 
+export interface TooltipDelay {
+  show?: number; // in ms
+  hide?: number; // in ms
+}
+
 export interface TooltipOptions {
   style: Record<string, any>;
   offset?: TooltipOffset;
   positionStrategy?: PositionStrategyOptions; // by default bottom
   showArrow?: boolean; // by default true
+  delay?: TooltipDelay;
 }

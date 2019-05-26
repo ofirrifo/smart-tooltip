@@ -28,7 +28,9 @@ export class SmartTooltipDirective {
   @mergeDeep()
   tooltipOptions: TooltipOptions = TooltipUtils.cloneDeep(TOOLTIP_OPTIONS);
 
-  componentRef: any;
+  private componentRef: any;
+  private showTimeoutId: NodeJS.Timer;
+  private hideTimeoutId: NodeJS.Timer;
 
 
   @HostListener('mouseenter')
@@ -58,11 +60,13 @@ export class SmartTooltipDirective {
    */
   public showTooltip(): void {
     if (!this.componentRef && this.getTextToDisplay()) {
-      this.createTooltip();
-      this.appRef.attachView(this.componentRef.hostView);
-      const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      this.setTooltipStyle(domElem);
-      document.body.appendChild(domElem);
+      this.showTimeoutId = setTimeout(() => {
+        this.createTooltip();
+        this.appRef.attachView(this.componentRef.hostView);
+        const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+        this.setTooltipStyle(domElem);
+        document.body.appendChild(domElem);
+      }, this.tooltipOptions.delay.show);
     }
   }
 
@@ -73,9 +77,16 @@ export class SmartTooltipDirective {
    * by using @ViewChild(SmartTooltipDirective)
    */
   public hideTooltip(): void {
-    this.appRef.detachView(this.componentRef.hostView);
-    this.componentRef.destroy();
-    this.componentRef = void 0;
+    this.hideTimeoutId = setTimeout(() => {
+      if (this.componentRef) {
+        this.appRef.detachView(this.componentRef.hostView);
+        this.componentRef.destroy();
+        this.componentRef = void 0;
+      } else {
+        clearTimeout(this.showTimeoutId);
+      }
+
+    }, this.tooltipOptions.delay.hide);
   }
 
   private createTooltip(): void {
