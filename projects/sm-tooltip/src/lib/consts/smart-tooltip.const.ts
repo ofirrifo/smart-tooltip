@@ -3,7 +3,7 @@ import { PositionStrategyOptions, TooltipOptions } from '../model/tooltip-option
 export const TOOLTIP_OPTIONS: TooltipOptions = {
   style: {
     position: 'absolute',
-    zIndex: 1000
+    zIndex: 2147483638
   },
   offset: {
     left: void 0,
