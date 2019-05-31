@@ -5,14 +5,16 @@ import {
   ElementRef,
   EmbeddedViewRef,
   HostListener,
+  Inject,
   Injector,
-  Input
+  Input,
+  Optional
 } from '@angular/core';
 
 import { mergeDeep } from '../decorators/merge-deep.decorator';
 import { ArrowStrategyOptions, PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
 import { TooltipUtils } from '../utils/tooltip.utils';
-import { TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
+import { SM_TOOLTIP_DEFAULT_OPTIONS, TOOLTIP_OPTIONS } from '../consts/smart-tooltip.const';
 import { TooltipPosition } from '../model/tooltip-position.interface';
 
 
@@ -23,9 +25,11 @@ export class SmartTooltipDirective {
 
   @Input('libSmartTooltip') text: string;
 
+  private readonly defaultTooltipOptions = TooltipUtils.mergeDeep(TooltipUtils.cloneDeep(TOOLTIP_OPTIONS, 'customTooltipComp'), this.userDefaultOptions);
+
   @Input()
   @mergeDeep()
-  tooltipOptions: TooltipOptions = TooltipUtils.cloneDeep(TOOLTIP_OPTIONS, 'customTooltipComp');
+  tooltipOptions: TooltipOptions = this.defaultTooltipOptions;
 
   private componentRef: any;
   private showTimeoutId: any;
@@ -42,12 +46,13 @@ export class SmartTooltipDirective {
     this.hideTooltip();
   }
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-              private appRef: ApplicationRef,
-              private injector: Injector,
-              private elementRef: ElementRef
-  ) {
-  }
+  constructor(
+    @Optional() @Inject(SM_TOOLTIP_DEFAULT_OPTIONS) private userDefaultOptions: TooltipOptions = {},
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector,
+    private elementRef: ElementRef
+  ) {}
 
   /**
    * show tooltip.

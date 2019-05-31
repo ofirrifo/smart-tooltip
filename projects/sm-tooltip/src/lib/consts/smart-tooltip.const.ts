@@ -1,5 +1,6 @@
 import { PositionStrategyOptions, TooltipOptions } from '../model/tooltip-options.interface';
 import { SmartTooltipComponent } from '../components/smart-tooltip/smart-tooltip.component';
+import { InjectionToken } from '@angular/core';
 
 export const TOOLTIP_OPTIONS: TooltipOptions = {
   style: {
@@ -18,3 +19,5 @@ export const TOOLTIP_OPTIONS: TooltipOptions = {
   },
   customTooltipComp: SmartTooltipComponent
 };
+
+export const SM_TOOLTIP_DEFAULT_OPTIONS = new InjectionToken<string>('SM_TOOLTIP_DEFAULT_OPTIONS');

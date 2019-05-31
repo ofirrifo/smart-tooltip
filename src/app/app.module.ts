@@ -9,6 +9,7 @@ import { MyTooltipComponent } from './my-tooltip/my-tooltip.component';
   imports: [
     BrowserModule,
     SmTooltipModule.withComponents([MyTooltipComponent]),
+    SmTooltipModule.forRoot({delay: {show: 1000, hide: 0}}),
     BrowserAnimationsModule
   ],
   declarations: [
